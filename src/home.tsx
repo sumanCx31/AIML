@@ -8,10 +8,10 @@ export default function Home() {
         
         <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">
-            Analytics & AI Model Dashboards
+            AIML Projects
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-slate-600">
-            Select a machine learning project or analytical model below to launch its interactive management and prediction console.
+            Select an AI/ML project 
           </p>
         </div>
 
@@ -49,7 +49,7 @@ export default function Home() {
 
                   <a href={item.link}>
                     <button className="inline-flex items-center space-x-2 text-sm font-semibold text-indigo-600 group-hover:text-indigo-700 cursor-pointer">
-                      <span>Launch Dashboard</span>
+                      <span>Launch Project</span>
                       <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform duration-200" />
                     </button>
                   </a>

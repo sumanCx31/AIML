@@ -3,19 +3,7 @@ import { Flower2, RefreshCw, CheckCircle2, Activity, ArrowLeft } from 'lucide-re
 
 const MODEL = {
   classes: ["Iris-setosa", "Iris-versicolor", "Iris-virginica"],
-  coefs: [
-    [-0.39634220880025917, 0.9523850084950785, -2.3762864908952794, -1.013511826451781],
-    [0.5122211702726981, -0.2480965988648085, -0.21455710425907595, -0.762022745956123],
-    [-0.11587896147244738, -0.7042884096302723, 2.5908435951543467, 1.7755345724079052]
-  ],
-  intercepts: [9.071770018712012, 1.818209270835834, -10.88997928954779]
 };
-
-function softmax(scores:any) {
-  const expScores = scores.map((s: any) => Math.exp(s));
-  const sumExp = expScores.reduce((a:any, b:any) => a + b, 0);
-  return expScores.map((e: any) => e / sumExp);
-}
 
 export default function IrisClassifier() {
   const [formData, setFormData] = useState({
@@ -53,25 +41,30 @@ export default function IrisClassifier() {
     setPrediction(null);
 
     setTimeout(() => {
-      const features = [sl, sw, pl, pw];
-      let scores = [0, 0, 0];
 
-      for (let i = 0; i < 3; i++) {
-        scores[i] = MODEL.intercepts[i];
-        for (let j = 0; j < 4; j++) {
-          scores[i] += MODEL.coefs[i][j] * features[j];
-        }
-      }
+      const score0 = 9.071770018712012 + (-0.39634220880025917 * sl) + (0.9523850084950785 * sw) + (-2.3762864908952794 * pl) + (-1.013511826451781 * pw);
+      const score1 = 1.818209270835834 + (0.5122211702726981 * sl) + (-0.2480965988648085 * sw) + (-0.21455710425907595 * pl) + (-0.762022745956123 * pw);
+      const score2 = -10.88997928954779 + (-0.11587896147244738 * sl) + (-0.7042884096302723 * sw) + (2.5908435951543467 * pl) + (1.7755345724079052 * pw);
 
-      const probs = softmax(scores);
-      const maxIdx = probs.indexOf(Math.max(...probs));
+      const exp0 = Math.exp(score0);
+      const exp1 = Math.exp(score1);
+      const exp2 = Math.exp(score2);
+      const sumExp = exp0 + exp1 + exp2;
+
+      const prob0 = exp0 / sumExp;
+      const prob1 = exp1 / sumExp;
+      const prob2 = exp2 / sumExp;
+
+      let maxIdx = 0;
+      if (prob1 > prob0 && prob1 > prob2) maxIdx = 1;
+      if (prob2 > prob0 && prob2 > prob1) maxIdx = 2;
 
       setPrediction({
         species: MODEL.classes[maxIdx],
         probabilities: {
-          setosa: (probs[0] * 100).toFixed(1),
-          versicolor: (probs[1] * 100).toFixed(1),
-          virginica: (probs[2] * 100).toFixed(1)
+          setosa: (prob0 * 100).toFixed(1),
+          versicolor: (prob1 * 100).toFixed(1),
+          virginica: (prob2 * 100).toFixed(1)
         }
       });
       setLoading(false);
@@ -80,18 +73,18 @@ export default function IrisClassifier() {
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-      <div className="max-w-xl w-full bg-white border border-slate-200/80 rounded-3xl shadow-xl shadow-slate-100 p-8 sm:p-10">
+      <div className="max-w-xl w-full bg-white border border-slate-200/80 rounded-3xl shadow-xl shadow-slate-100 p-8 sm:p-10 relative">
         <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
-        <a 
-          href="/" 
-          className="inline-flex items-center space-x-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-gray-200/80 rounded-xl text-xs font-semibold text-gray-700 shadow-sm hover:bg-white hover:shadow transition-all"
-        >
-          <ArrowLeft className="w-4 h-4 text-teal-600" />
-          <span>Back to Home</span>
-        </a>
-      </div>
-        {/* Header */}
-        <div className="flex items-center space-x-4 mb-8 pb-6 border-b border-slate-100">
+          <a 
+            href="/" 
+            className="inline-flex items-center space-x-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-gray-200/80 rounded-xl text-xs font-semibold text-gray-700 shadow-sm hover:bg-white hover:shadow transition-all"
+          >
+            <ArrowLeft className="w-4 h-4 text-teal-600" />
+            <span>Back to Home</span>
+          </a>
+        </div>
+
+        <div className="flex items-center space-x-4 mb-8 pb-6 border-b border-slate-100 mt-6 sm:mt-0">
           <div className="p-3.5 bg-emerald-50 rounded-2xl text-emerald-600 ring-8 ring-emerald-50/50">
             <Flower2 className="h-7 w-7" />
           </div>
@@ -188,7 +181,7 @@ export default function IrisClassifier() {
         </form>
 
         {prediction && (
-          <div className="mt-8 p-6 bg-linear-to-br from-emerald-50 to-teal-50/30 border border-emerald-100 rounded-2xl animate-fadeIn">
+          <div className="mt-8 p-6 bg-gradient-to-br from-emerald-50 to-teal-50/35 border border-emerald-100 rounded-2xl">
             <div className="flex items-center space-x-3 mb-4">
               <CheckCircle2 className="h-6 w-6 text-emerald-600 shrink-0" />
               <div>
@@ -230,7 +223,6 @@ export default function IrisClassifier() {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { BarChart3, Flower2, Home, Users, CreditCard } from "lucide-react";
+import { Flower2, Home, CreditCard, HeartPulse } from "lucide-react";
 
 export interface DashboardItem {
   id: string;
@@ -43,24 +43,14 @@ export const dashboards: DashboardItem[] = [
     link: "/loan-status-predictor",
   },
   {
-    id: "customer-churn",
-    title: "Customer Churn Analysis",
-    description: "Predict customer retention and identify high-risk accounts using historical behavioral data.",
-    icon: Users,
-    badge: "Predictive",
-    badgeColor: "bg-purple-100 text-purple-800",
-    stats: "80.7% Accuracy",
-    link: "#",
-  },
-  {
-    id: "sales-forecast",
-    title: "Sales & Revenue Forecast",
-    description: "Project upcoming quarterly sales trends and seasonal demand variations across multi-channel retail.",
-    icon: BarChart3,
-    badge: "Time Series",
-    badgeColor: "bg-emerald-100 text-emerald-800",
-    stats: "........",
-    link: "#",
+    id: "diabetes-test",
+    title: "Diabetes Risk Assessment",
+    description: "Evaluate risk levels (Low, Moderate, High) using health metrics, glucose levels, and lifestyle factors.",
+    icon: HeartPulse,
+    badge: "Classification",
+    badgeColor: "bg-rose-100 text-rose-800",
+    stats: "Logistic Regression",
+    link: "/diabetes",
   },
 ];
 

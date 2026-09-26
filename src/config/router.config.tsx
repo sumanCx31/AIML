@@ -4,12 +4,14 @@ import NotFound from "../notFound";
 import SimpleForm from "../modules/iris-flower";
 import NepalHousePredictor from "../modules/house-price-prediction";
 import LoanStatusPredictor from "../modules/loan_status_predictor";
+import DiabetesRiskClassifier from "../modules/diabetes-test";
 
 const routerConfig = createBrowserRouter([
   { path: "/", Component: DashboardGrid },
   { path: "irisflower", Component: SimpleForm },
   { path: "house-price-prediction", Component: NepalHousePredictor },
   { path: "loan-status-predictor", Component: LoanStatusPredictor },
+  { path: "diabetes-test", Component: DiabetesRiskClassifier },
   {
     path: "*",
     Component: NotFound,

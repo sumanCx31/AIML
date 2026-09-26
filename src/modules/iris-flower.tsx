@@ -181,7 +181,7 @@ export default function IrisClassifier() {
         </form>
 
         {prediction && (
-          <div className="mt-8 p-6 bg-gradient-to-br from-emerald-50 to-teal-50/35 border border-emerald-100 rounded-2xl">
+          <div className="mt-8 p-6 bg-linear-to-br from-emerald-50 to-teal-50/35 border border-emerald-100 rounded-2xl">
             <div className="flex items-center space-x-3 mb-4">
               <CheckCircle2 className="h-6 w-6 text-emerald-600 shrink-0" />
               <div>

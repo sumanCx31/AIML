@@ -49,8 +49,8 @@ export const dashboards: DashboardItem[] = [
     icon: HeartPulse,
     badge: "Classification",
     badgeColor: "bg-rose-100 text-rose-800",
-    stats: "Logistic Regression",
-    link: "/diabetes",
+    stats: "80% Accuracy",
+    link: "/diabetes-test",
   },
 ];
 
